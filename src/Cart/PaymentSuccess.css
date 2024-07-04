@@ -1,0 +1,25 @@
+.payment-success-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+  }
+  
+  .payment-success-container h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+  
+  .success-icon {
+    font-size: 5em;
+    color: #28a745;
+    animation: success-animation 1s ease-in-out;
+  }
+  
+  @keyframes success-animation {
+     0% { transform: scale(0.5); opacity: 0; }
+     100% { transform: scale(1); opacity: 1; }
+  }
+  

@@ -1,0 +1,72 @@
+.product-card {
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.8);  /* Semi-transparent white */
+  backdrop-filter: blur(10px);  /* Blur background */
+  border-radius: 10px;  /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Subtle shadow */
+  transition: transform 0.2s;  /* Smooth transformation */
+}
+
+.product-card:hover {
+  transform: scale(1.05);  /* Slight zoom on hover */
+}
+
+.product-card img {
+  max-height: 200px;  /* Ensure images are consistent in size */
+  object-fit: cover;  /* Ensure the image covers the entire space */
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.product-card .card-body {
+  text-align: center;
+}
+
+.product-card .product-price {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #333;
+}
+
+.product-card .product-description {
+  font-size: 1em;
+  color: #666;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.stars i {
+  color: gold;
+  margin-right: 5px;
+}
+
+.stars span {
+  margin-left: 5px;
+  font-size: 1em;
+  color: #555;
+}
+
+.modal-image {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.modal-body .product-description {
+  margin-top: 10px;
+  font-size: 1.1em;
+  color: #555;
+}
+
+.modal-body .product-price {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333;
+}
