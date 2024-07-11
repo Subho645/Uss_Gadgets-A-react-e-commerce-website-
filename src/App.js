@@ -1,4 +1,4 @@
-import './App.css';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from './Navbar/Navbar';
 import MobilePage from './pages/MobilePage';
@@ -7,7 +7,6 @@ import SmartWatchPage from './pages/SmartWatchPage';
 import CameraPage from './pages/CameraPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { useState } from 'react';
 import Cart from './Cart/Cart';
 import OrderForm from './Cart/OrderForm';
 import PaymentPage from './Cart/PaymentPage';
@@ -18,8 +17,24 @@ const App = () => {
   const [totalPrice, setTotalPrice] = useState(0);
 
   const addToCart = (product) => {
-    setCart([...cart, product]);
-    setTotalPrice(totalPrice + parseInt(product.price.replace('₹', '').replace(',', '').replace(',', '')));
+    const existingProductIndex = cart.findIndex((item) => item.name === product.name);
+
+    if (existingProductIndex !== -1) {
+      updateCartQuantity(existingProductIndex, cart[existingProductIndex].quantity + 1);
+    } else {
+      setCart([...cart, { ...product, quantity: 1 }]);
+      setTotalPrice(totalPrice + parseInt(product.price.replace('₹', '').replace(',', '').replace(',', '')));
+    }
+  };
+
+  const updateCartQuantity = (index, newQuantity) => {
+    const updatedCart = [...cart];
+    const productPrice = parseInt(updatedCart[index].price.replace('₹', '').replace(',', '').replace(',', ''));
+    const priceDifference = (newQuantity - updatedCart[index].quantity) * productPrice;
+    
+    updatedCart[index].quantity = newQuantity;
+    setCart(updatedCart);
+    setTotalPrice(totalPrice + priceDifference);
   };
 
   const removeFromCart = (index) => {
@@ -27,11 +42,11 @@ const App = () => {
     setCart(cart.filter((_, i) => i !== index));
     setTotalPrice(totalPrice - parseInt(productToRemove.price.replace('₹', '').replace(',', '').replace(',', '')));
   };
+
   const clearCart = () => {
     setCart([]);
     setTotalPrice(0);
   };
-
 
   return (
     <Router>
@@ -41,7 +56,7 @@ const App = () => {
         <Route path="/laptop-tabs" element={<LaptopTabsPage addToCart={addToCart} />} />
         <Route path="/smart-watch" element={<SmartWatchPage addToCart={addToCart} />} />
         <Route path="/camera" element={<CameraPage addToCart={addToCart} />} />
-        <Route path="/cart" element={<Cart cart={cart} totalPrice={totalPrice} removeFromCart={removeFromCart} />} />
+        <Route path="/cart" element={<Cart cart={cart} totalPrice={totalPrice} removeFromCart={removeFromCart} updateCartQuantity={updateCartQuantity} />} />
         <Route path="/order-form" element={<OrderForm clearCart={clearCart} totalPrice={totalPrice} />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
